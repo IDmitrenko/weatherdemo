@@ -26,7 +26,9 @@ public class WeatherAggregationServiceNull implements WeatherServiceAggregation 
     public WeatherAggregationServiceNull(List<WeatherService> weatherServices, WeatherCache weatherCache) {
         this.weatherServices = weatherServices;
         this.weatherCache = weatherCache;
+        // создаем очередь
         weatherQueue = new ArrayBlockingQueue<>(weatherServices.size());
+        // создаем ThreadPoll по количеству опрашиваемых сервисов
         executor = Executors.newFixedThreadPool(weatherServices.size());
     }
 
@@ -49,12 +51,15 @@ public class WeatherAggregationServiceNull implements WeatherServiceAggregation 
 
     private List<Weather> doRequest() throws InterruptedException {
         weatherQueue.clear();
+        // запуск сервисов в паралельном режиме
         for (WeatherService weatherService : weatherServices) {
             executor.submit(() -> {
+                // результаты каждой задачи складываются в очередь
                 var result = weatherQueue.offer(weatherService.getWeather());
                 logger.debug("weatherQueue.offer result:{}", result);
             });
         }
+        // ждем пока выполнится первый сервис и отдаем его результаты
         return weatherQueue.take();
     }
 

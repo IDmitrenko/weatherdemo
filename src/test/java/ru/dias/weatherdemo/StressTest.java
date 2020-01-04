@@ -13,8 +13,8 @@ public class StressTest {
             .version(HttpClient.Version.HTTP_2)
             .build();
 
-    private static final String url = "http://localhost:8080/api/weather";
-    private static final String urlNull = "http://localhost:8080/api/weatherNull";
+    private static final String url = "http://localhost:8084/api/weather";
+    private static final String urlNull = "http://localhost:8084/api/weatherNull";
 
     public static void main(String[] args) {
         var st = new StressTest();

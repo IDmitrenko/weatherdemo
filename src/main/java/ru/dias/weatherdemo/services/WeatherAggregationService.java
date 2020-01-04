@@ -38,6 +38,9 @@ public class WeatherAggregationService implements WeatherServiceAggregation {
 
     @Override
     public List<Weather> getWeather() {
+        // - смотрим есть ненулевое значение в кэше
+        // - если нет, то делаем запрос, результат помещаем в кэш
+        // возвращаем значение из кэша
         return weatherCache.getValue().orElseGet(() -> {
             var weather = doRequest();
             weatherCache.putValue(weather);

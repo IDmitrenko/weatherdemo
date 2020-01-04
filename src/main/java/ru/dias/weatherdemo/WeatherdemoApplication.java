@@ -12,12 +12,19 @@ import ru.dias.weatherdemo.services.WeatherAggregationService;
 /*
 О формате логов
 http://openjdk.java.net/jeps/158
+
+// параметры настройки GC
+// устанавливаем размер кучи
 -Xms256m
 -Xmx256m
+// параметры для логирования GC
 -Xlog:gc=debug:file=./logs/gc-%p-%t.log:tags,uptime,time,level:filecount=5,filesize=10m
+// параметры для дампа при OutOfMemory
 -XX:+HeapDumpOnOutOfMemoryError
 -XX:HeapDumpPath=./logs/dump
+// указываем что будем использовать сборщик мусора G1
 -XX:+UseG1GC
+// целевой target будет 10 мс
 -XX:MaxGCPauseMillis=10
 */
 
